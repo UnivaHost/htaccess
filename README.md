@@ -2,6 +2,7 @@
 > Options All -Indexes
 
 ## SSL Https active Force non-www
+``
 > <IfModule mod_rewrite.c> <br/>
 >   RewriteEngine on <br/>
 >   RewriteCond %{HTTP_HOST} ^www\.(.*)$ [NC] <br/>
@@ -9,6 +10,7 @@
 >    RewriteCond %{HTTPS} !=on <br/>
 >    RewriteRule ^(.*)$ https://%{HTTP_HOST}/$1 [R=301,L] <br/>
 > </IfModule> <br/>
+``
 
 ## SSL Https Active Force www in a Generic Way
 > <IfModule mod_rewrite.c> <br/>
