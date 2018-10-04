@@ -1,61 +1,62 @@
-## stop directory browsing
+## Stop directory browsing
 > Options All -Indexes
 
-# SSL Https active Force non-www
-<IfModule mod_rewrite.c>
-   RewriteEngine on
-   RewriteCond %{HTTP_HOST} ^www\.(.*)$ [NC]
-   RewriteRule ^(.*)$ https://%1/$1 [R=301,L]
-   RewriteCond %{HTTPS} !=on
-   RewriteRule ^(.*)$ https://%{HTTP_HOST}/$1 [R=301,L]
-</IfModule>
+## SSL Https active Force non-www
+> <IfModule mod_rewrite.c>
+>   RewriteEngine on
+>   RewriteCond %{HTTP_HOST} ^www\.(.*)$ [NC]
+>    RewriteRule ^(.*)$ https://%1/$1 [R=301,L]
+>    RewriteCond %{HTTPS} !=on
+>    RewriteRule ^(.*)$ https://%{HTTP_HOST}/$1 [R=301,L]
+> </IfModule>
 
-# SSL Https Active Force www in a Generic Way
-<IfModule mod_rewrite.c>
-   RewriteEngine on
-   RewriteCond %{HTTP_HOST} !^$
-   RewriteCond %{HTTP_HOST} !^www\. [NC]
-   RewriteCond %{HTTPS}s ^on(s)|
-   RewriteRule ^ https://www.%{HTTP_HOST}%{REQUEST_URI} [R=301,L]
-</IfModule>
+## SSL Https Active Force www in a Generic Way
+> <IfModule mod_rewrite.c>
+>    RewriteEngine on
+>    RewriteCond %{HTTP_HOST} !^$
+>    RewriteCond %{HTTP_HOST} !^www\. [NC]
+>    RewriteCond %{HTTPS}s ^on(s)|
+>    RewriteRule ^ https://www.%{HTTP_HOST}%{REQUEST_URI} [R=301,L]
+> </IfModule>
 
-#AIOWPS_PREVENT_IMAGE_HOTLINKS_START
-<IfModule mod_rewrite.c>
-RewriteEngine On
-RewriteCond %{HTTP_REFERER} !^$
-RewriteCond %{REQUEST_FILENAME} -f
-RewriteCond %{REQUEST_FILENAME} \.(gif|jpe?g?|png)$ [NC]
-RewriteCond %{HTTP_REFERER} !^http(s)?://univahost\.com [NC]
-RewriteRule \.(gif|jpe?g?|png)$ - [F,NC,L]
-</IfModule>
-#AIOWPS_PREVENT_IMAGE_HOTLINKS_END
-
-
-# Text FIle access
-<files file.txt>
-order allow,deny
-deny from all
-</files>
+## AIOWPS_PREVENT_IMAGE_HOTLINKS_START
+> <IfModule mod_rewrite.c>
+>     RewriteEngine On
+>     RewriteCond %{HTTP_REFERER} !^$
+>     RewriteCond %{REQUEST_FILENAME} -f
+>     RewriteCond %{REQUEST_FILENAME} \.(gif|jpe?g?|png)$ [NC]
+>     RewriteCond %{HTTP_REFERER} !^http(s)?://univahost\.com [NC]
+>     RewriteRule \.(gif|jpe?g?|png)$ - [F,NC,L]
+> </IfModule>
 
 
-# Block double extensions from being uploaded or accessed, including htshells
-<FilesMatch ".*\.([^.]+)\.([^.]+)$">
-Order Deny,Allow
-Deny from all
-</FilesMatch>
 
-# secure uploads directory
-<FilesMatch "\.(jpg|jpeg|jpe|gif|png|tif|tiff)$">
-    Order Deny,Allow
-    Allow from all
-</FilesMatch>
+## Text FIle access
+> <files file.txt>
+>     order allow,deny
+>     deny from all
+> </files>
 
 
-# Block shell uploaders, htshells, and other baddies
-RewriteCond %{REQUEST_URI} ((php|my|bypass)?shell|remview.*|phpremoteview.*|sshphp.*|pcom|nstview.*|c99|c100|r57|webadmin.*|phpget.*|phpwriter.*|fileditor.*|locus7.*|storm7.*)\.(p?s?x?htm?l?|txt|aspx?|cfml?|cgi|pl|php[3-9]{0,1}|jsp?|sql|xml) [NC,OR]
-RewriteCond %{REQUEST_URI} (\.exe|\.php\?act=|\.tar|_vti|afilter=|algeria\.php|chbd|chmod|cmd|command|db_query|download_file|echo|edit_file|eval|evil_root|exploit|find_text|fopen|fsbuff|fwrite|friends_links\.|ftp|gofile|grab|grep|htshell|\ -dump|logname|lynx|mail_file|md5|mkdir|mkfile|mkmode|MSOffice|muieblackcat|mysql|owssvr\.dll|passthru|popen|proc_open|processes|pwd|rmdir|root|safe0ver|search_text|selfremove|setup\.php|shell|ShellAdresi\.TXT|spicon|sql|ssh|system|telnet|trojan|typo3|uname|unzip|w00tw00t|whoami|xampp) [NC,OR]
-RewriteCond %{QUERY_STRING} (\.exe|\.tar|act=|afilter=|alter|benchmark|chbd|chmod|cmd|command|cast|char|concat|convert|create|db_query|declare|delete|download_file|drop|edit_file|encode|environ|eval|exec|exploit|find_text|fsbuff|ftp|friends_links\.|globals|gofile|grab|insert|localhost|logname|loopback|mail_file|md5|meta|mkdir|mkfile|mkmode|mosconfig|muieblackcat|mysql|order|passthru|popen|proc_open|processes|pwd|request|rmdir|root|scanner|script|search_text|select|selfremove|set|shell|sql|sp_executesql|spicon|ssh|system|telnet|trojan|truncate|uname|union|unzip|whoami) [NC]
-RewriteRule .* - [F]
+## Block double extensions from being uploaded or accessed, including htshells
+> <FilesMatch ".*\.([^.]+)\.([^.]+)$">
+>     Order Deny,Allow
+>     Deny from all
+> </FilesMatch>
+
+## secure uploads directory
+> <FilesMatch "\.(jpg|jpeg|jpe|gif|png|tif|tiff)$">
+>     Order Deny,Allow
+>     Allow from all
+> </FilesMatch>
+
+
+## Block shell uploaders, htshells, and other baddies
+> RewriteCond %{REQUEST_URI} ((php|my|bypass)?shell|remview.*|phpremoteview.*|sshphp.*|pcom|nstview.*|c99|c100|r57|webadmin.*|phpget.*|phpwriter.*|fileditor.*|locus7.*|storm7.*)\.(p?s?x?htm?l?|txt|aspx?|cfml?|cgi|pl|php[3-9]{0,1}|jsp?|sql|xml) [NC,OR]
+> RewriteCond %{REQUEST_URI} (\.exe|\.php\?act=|\.tar|_vti|afilter=|algeria\.php|chbd|chmod|cmd|command|db_query|download_file|echo|edit_file|eval|evil_root|exploit|find_text|fopen|fsbuff|fwrite|friends_links\.|ftp|gofile|grab|grep|htshell|\ -dump|logname|lynx|mail_file|md5|mkdir|mkfile|mkmode|MSOffice|muieblackcat|mysql|owssvr\.dll|passthru|popen|proc_open|processes|pwd|rmdir|root|safe0ver|search_text|selfremove|setup\.php|shell|ShellAdresi\.TXT|spicon|sql|ssh|system|telnet|trojan|typo3|uname|unzip|w00tw00t|whoami|xampp) [NC,OR]
+> RewriteCond %{QUERY_STRING} (\.exe|\.tar|act=|afilter=|alter|benchmark|chbd|chmod|cmd|command|cast|char|concat|convert|create|db_query|declare|delete|download_file|drop|edit_file|encode|environ|eval|exec|exploit|find_text|fsbuff|ftp|friends_links\.|globals|gofile|grab|insert|localhost|logname|loopback|mail_file|md5|meta|mkdir|mkfile|mkmode|mosconfig|muieblackcat|mysql|order|passthru|popen|proc_open|processes|pwd|request|rmdir|root|scanner|script|search_text|select|selfremove|set|shell|sql|sp_executesql|spicon|ssh|system|telnet|trojan|truncate|uname|union|unzip|whoami) [NC]
+> RewriteRule .* - [F]
+
 
 
 
