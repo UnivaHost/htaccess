@@ -13,13 +13,13 @@
 ``
 
 ## SSL Https Active Force www in a Generic Way
-> <IfModule mod_rewrite.c> <br/>
+> ( <IfModule mod_rewrite.c> <br/> )
 >    RewriteEngine on <br/>
 >    RewriteCond %{HTTP_HOST} !^$ <br/>
 >    RewriteCond %{HTTP_HOST} !^www\. [NC] <br/>
 >    RewriteCond %{HTTPS}s ^on(s)| <br/>
 >    RewriteRule ^ https://www.%{HTTP_HOST}%{REQUEST_URI} [R=301,L] <br/>
-> </IfModule>
+> ( </IfModule> )
 
 ## AIOWPS_PREVENT_IMAGE_HOTLINKS_START
 > <IfModule mod_rewrite.c> <br/>
