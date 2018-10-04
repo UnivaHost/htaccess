@@ -1,5 +1,5 @@
-#stop directory browsing
-Options All -Indexes
+###stop directory browsing
+> Options All -Indexes
 
 # SSL Https active Force non-www
 <IfModule mod_rewrite.c>
