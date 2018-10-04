@@ -1,4 +1,4 @@
-###stop directory browsing
+## stop directory browsing
 > Options All -Indexes
 
 # SSL Https active Force non-www
