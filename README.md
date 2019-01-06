@@ -1,1 +1,1 @@
-## Heloful .htaccess code 
+## Helpful .htaccess code 
