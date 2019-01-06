@@ -19,6 +19,23 @@ Options All -Indexes
    RewriteRule ^ https://www.%{HTTP_HOST}%{REQUEST_URI} [R=301,L]
 </IfModule>
 
+# Blocking Visitors Referred from a Particular Domain
+<IfModule mod_rewrite.c>
+   RewriteEngine on
+   RewriteCond %{HTTP_REFERER} bannedurl1.com [NC,OR]
+   RewriteCond %{HTTP_REFERER} bannedurl2.com [NC,OR]
+   RewriteRule .* - [F]
+</ifModule>
+
+# Blocking Requests from Particular User Agents
+RewriteEngine On  
+RewriteBase /  
+SetEnvIfNoCase Referer "^$" bad_user
+SetEnvIfNoCase User-Agent "^badbot1" bad_user
+SetEnvIfNoCase User-Agent "^badbot2" bad_user
+SetEnvIfNoCase User-Agent "^badbot3" bad_user
+Deny from env=bad_user
+
 #AIOWPS_PREVENT_IMAGE_HOTLINKS_START
 <IfModule mod_rewrite.c>
 RewriteEngine On
@@ -91,6 +108,12 @@ DirectoryIndex index.html index.htm index.php
 <FilesMatch ".(flv|gif|jpg|jpeg|png|ico|swf|js|css|pdf)$">
   Header set Cache-Control "max-age=2592000"
 </FilesMatch>
+
+# Renaming an .htaccess File
+AccessFileName htac.cess
+
+#Changing a Default Index Page
+DirectoryIndex mypage.html
 
 # Htaccess File Security
 <Files .htaccess>
